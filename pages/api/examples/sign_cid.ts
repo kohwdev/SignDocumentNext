@@ -6,7 +6,6 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import fs from 'fs'
 import nodeSignPDF from 'node-signpdf'
 import { Web3Storage, File, CIDString} from 'web3.storage'
-import { CID } from "web3.storage/dist/src/lib/interface"
 
 
 export default async function handler(
@@ -19,25 +18,28 @@ export default async function handler(
 
     const token = process.env.WEB3_STORAGE_TOKEN || "<NOT SET>"
     const storage = new Web3Storage({ token })
-
+    console.log('get web3storage instance')
     let original_cid = req.query.cid as CIDString
-
+    console.log('cid to lookup')
     let pdfBuffer = await storage.get(original_cid)
-
+    console.log('cid afte storage.get')
     pdfBuffer = nodeSignPDF.plainAddPlaceholder({
         pdfBuffer,
         reason: 'I have reviewed it.',
         signatureLength: 1612,
     });
+    console.log('after plainAddPlaceholder')
     
     const signedPdf = nodeSignPDF.default.sign(
         pdfBuffer,
         fs.readFileSync('certificate.p12'),
         {passphrase:"1234"}
       );
-    
+      console.log('after sign')
     
     const cid = await storage.put([new File([signedPdf], "signedPdf")])
+    console.log('after put')
+    console.log('cid:'+cid)
 
     return res.send({
       content:
