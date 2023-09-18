@@ -33,7 +33,7 @@ export default async function handler(
 
     let buffer = fs.readFileSync(data.files.file[0].filepath);
 
-    fs.writeFileSync("/Users/stevehorn/Downloads/file.pdf", buffer);
+    fs.writeFileSync("~/Downloads/file.pdf", buffer);
 
     res.status(200).json(data);
 }

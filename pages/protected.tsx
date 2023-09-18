@@ -39,7 +39,7 @@ export default function ProtectedPage() {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const response = await fetch('/api/examples/upload-file', {
+        const response = await fetch('/api/examples/sign_document', {
           method: 'POST',
           body: formData,
         });
@@ -47,6 +47,10 @@ export default function ProtectedPage() {
         if (response.ok) {
           console.log('File uploaded successfully.');
           // You can perform additional actions here upon successful upload.
+          const json = await response.json()
+          if (json.content) {
+            setContent(json.content)
+          }          
         } else {
           console.error('File upload failed.');
         }
