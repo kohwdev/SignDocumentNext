@@ -60,6 +60,9 @@ export const authOptions: NextAuthOptions = {
   theme: {
     colorScheme: "light",
   },
+  session: {
+    strategy: 'jwt',
+  },  
   callbacks: {
     async jwt({ token }) {
       token.userRole = "admin"
