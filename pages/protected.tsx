@@ -5,8 +5,9 @@ import AccessDenied from "../components/access-denied"
 
 export default function ProtectedPage() {
   const { data: session } = useSession()
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);  
   const [content, setContent] = useState()
+  const [selectedCID, setSelectedCID] = useState("");
 
   // Fetch content from protected route
   useEffect(() => {
@@ -29,9 +30,40 @@ export default function ProtectedPage() {
     )
   }
 
+  const handleCIDChange = (e: any) => {
+    setSelectedCID(e.target.value);
+  };  
   const handleFileChange = (e: any) => {
     setSelectedFile(e.target.files[0]);
   };
+  const handleCIDSign = async () => {
+    try {
+      // Create an object to represent your query parameters
+      const queryParams = new URLSearchParams({
+        cid: selectedCID
+      });
+
+      // Append the query parameters to the base URL
+      const urlWithParams = `/api/examples/sign_cid?${queryParams.toString()}`;
+
+              try {
+                const response = await fetch(urlWithParams);
+
+                if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                // Process the data received from the API
+                console.log(data);
+              } catch (error) {
+              console.error('Fetch error:', error);
+
+        }
+      } catch (error) {
+        console.error('An error occurred while uploading the file:', error);
+      }
+    } 
 
   const handleFileUpload = async () => {
     try {
@@ -73,6 +105,10 @@ export default function ProtectedPage() {
           <h2>File Upload</h2>
           <input type="file" onChange={handleFileChange} />
           <button onClick={handleFileUpload}>Upload</button>
+        </div>
+        <div>
+          <input type="text" onChange={handleCIDChange} />
+          <button onClick={handleCIDSign}>Sign Doc</button>          
         </div>
 
       </p>
