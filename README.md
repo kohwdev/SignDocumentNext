@@ -1,3 +1,21 @@
+I call it *BlockUsign*. 
+
+There are three functions it currently allows a user to do that are important:
+
+* Login with Google or Facebook
+* Upload a pdf document and it is signed with a p12 certificate and saved to IPFS returning a cid
+* Use a cid of a document to add an additional signature from another user
+
+The features that are to be added include:
+
+* Add .png image of signature to signature in PDF
+* First Person provides the Email of the Second Person when the First Person uploads and signing the document.
+* Second Person is notified by email that the document is available to be signed. 
+* Second Person logs in and signs the document, a new IPFS document and CID is created.
+* First Person is notified the document has been signed and the new IPFS CID.
+
+------
+
 > The example repository is maintained from a [monorepo](https://github.com/nextauthjs/next-auth/tree/main/apps/examples/nextjs). Pull Requests should be opened against [`nextauthjs/next-auth`](https://github.com/nextauthjs/next-auth).
 
 <p align="center">
