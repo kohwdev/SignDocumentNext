@@ -55,7 +55,7 @@ export default async function handler(
     // Continue with adding the image
     const page = pdfDoc.getPage(0); // Get the first page or the specific page you want to add the image to
     const imageBytes = fs.readFileSync(
-      "/Users/woonkoh/Desktop/tublian/SignDocumentNext/pages/api/examples/signature.png"
+      "pages/api/examples/signature-sample.png"
     ); // Replace with the correct path to your signature image
 
     const image = await pdfDoc.embedPng(imageBytes);
