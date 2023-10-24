@@ -56,7 +56,7 @@ export default async function handler(
     const page = pdfDoc.getPage(0); // Get the first page or the specific page you want to add the image to
     const imageBytes = fs.readFileSync(
       "pages/api/examples/signature-sample.png"
-    ); // Replace with the correct path to your signature image
+    ); // Replace with the correct path to your signature img
 
     const image = await pdfDoc.embedPng(imageBytes);
     const { width, height } = image.size();
